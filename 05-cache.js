@@ -19,7 +19,7 @@ function cacheObj(ttlFunc) {
         };
     // decrease TTL and remove prop when it reaches zero
     function invalidate() {
-  		for (let prop in obj) {
+        for (let prop in obj) {
         	obj[prop].ttl -= 1;
             if (obj[prop].ttl <= 0) {
             	delete obj[prop];

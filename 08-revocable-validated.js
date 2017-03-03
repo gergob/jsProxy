@@ -3,18 +3,18 @@
 // library code --------------------------------------------------------------------------------
 
 const options = {},
-	optionsRevocable = Proxy.revocable(options, {
-    	set (obj, prop, value) {
-        	if (prop === 'name') {
-            	if (typeof value !== 'string' || value === '') {
-            		throw new TypeError('"name" option should be a non-emtpy string');
-            	}
+    optionsRevocable = Proxy.revocable(options, {
+        set (obj, prop, value) {
+            if (prop === 'name') {
+                if (typeof value !== 'string' || value === '') {
+                    throw new TypeError('"name" option should be a non-emtpy string');
+                }
             } else if (prop === 'age') {
-            	if (typeof value !== 'number' || value < 0 || value > 200) {
-            		throw new TypeError('"age" option should be a number between 0 and 200');
-           		}
+                if (typeof value !== 'number' || value < 0 || value > 200) {
+                    throw new TypeError('"age" option should be a number between 0 and 200');
+                }
             } else {
-            	throw new TypeError('The only valid options are "name" and "age"');
+                throw new TypeError('The only valid options are "name" and "age"');
             }
             Reflect.set(obj, prop, value);
         }
@@ -36,7 +36,7 @@ clientSometimeLater();
 var globalOpts;
 
 function clientSetOptionsEventHandler(opts) {
-	opts.name = 'Bob';
+    opts.name = 'Bob';
     opts.age = 25;
     try {
         opts.age = 'old';   // TypeError: "age" option should be a number between 0 and 200
@@ -53,7 +53,7 @@ function clientSetOptionsEventHandler(opts) {
 }
 
 function clientSometimeLater() {
-	// trying to change it outside of the event handler
+    // trying to change it outside of the event handler
     try {
         globalOpts.name = 'Not Bob';  // TypeError: Cannot perform 'set' on a proxy that has been revoked
     } catch (ex) {

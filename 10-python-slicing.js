@@ -2,11 +2,11 @@
 
 function pythonIndex(array) {
 
-	function parse(value, defaultValue, resolveNegative) {
-    	if (value === undefined || isNaN(value)) {
-        	value = defaultValue;
+    function parse(value, defaultValue, resolveNegative) {
+        if (value === undefined || isNaN(value)) {
+            value = defaultValue;
         } else if (resolveNegative && value < 0) {
-	        value += array.length;
+            value += array.length;
         }
         return value;
     }
@@ -42,8 +42,8 @@ function pythonIndex(array) {
         }
     }
 
-	const handler = {
-    	get (arr, prop) {
+    const handler = {
+        get (arr, prop) {
             return slice(prop) || Reflect.get(array, prop);
         }
     };
@@ -58,9 +58,9 @@ let values = [0,1,2,3,4,5,6,7,8,9],
 console.log(JSON.stringify(values));
 
 pyValues['-1'];      // 9
-pyValues['0:3'];     // [0,1,2]	
-pyValues['8:5:-1'];	 // [8,7,6]
-pyValues['-8::-1'];	 // [2,1,0]
+pyValues['0:3'];     // [0,1,2]    
+pyValues['8:5:-1'];  // [8,7,6]
+pyValues['-8::-1'];  // [2,1,0]
 pyValues['::-1'];    // [9,8,7,6,5,4,3,2,1,0]
 pyValues['4::2'];    // [4,6,8]
 

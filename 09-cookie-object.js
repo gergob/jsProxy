@@ -1,7 +1,7 @@
 // 09 - Cookie object
 
 function cookieObject() {
-	// load current cookies
+    // load current cookies
     const cookies = {}; 
     document.cookie.split(';').forEach(item => { 
         const i = item.indexOf('='),
@@ -10,8 +10,8 @@ function cookieObject() {
         cookies[key] = value;
     });
     // proxy to persist props to cookies
-	const handler = {
-    	set (obj, prop, value) {
+    const handler = {
+        set (obj, prop, value) {
             document.cookie = `${prop}=${value}`;
             Reflect.set(obj, prop, value);
         },
@@ -20,14 +20,14 @@ function cookieObject() {
             return Reflect.deleteProperty(obj, prop);
         }
     };
-	return new Proxy(cookies, handler);
+    return new Proxy(cookies, handler);
 }
 
 
 // simulate previously saved/missing cookies (create one & two, delete three)
-document.cookie='ONE=1';
-document.cookie='TWO=234';
-document.cookie='THREE=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+document.cookie = 'ONE=1';
+document.cookie = 'TWO=234';
+document.cookie = 'THREE=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 
 // try the cookies proxy
 const myCookies = cookieObject();

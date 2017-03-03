@@ -1,16 +1,16 @@
 // 04 - OnChange event for objects and arrays
 
 function trackChange(obj, onChange) {
-	const handler = {
-    	set (obj, prop, value) {
-        	const oldVal = obj[prop];
+    const handler = {
+        set (obj, prop, value) {
+            const oldVal = obj[prop];
             Reflect.set(obj, prop, value);
             onChange(obj, prop, oldVal, value);
         },
         deleteProperty (obj, prop) {
             const oldVal = obj[prop];
             Reflect.deleteProperty(obj, prop);
-        	onChange(obj, prop, oldVal, undefined);
+            onChange(obj, prop, oldVal, undefined);
         }
     };
     return new Proxy(obj, handler);
@@ -19,7 +19,7 @@ function trackChange(obj, onChange) {
 
 // trying it out on an object
 let myObj = trackChange({a: 1, b: 2}, function (obj, prop, oldVal, newVal) {
-	console.log(`myObj.${prop} changed from ${oldVal} to ${newVal}`);
+    console.log(`myObj.${prop} changed from ${oldVal} to ${newVal}`);
 });
 
 myObj.a = 5;     // myObj.a changed from 1 to 5
@@ -31,7 +31,7 @@ myObj.c = 6;     // myObj.c changed from undefined to 6
 let myArr = trackChange([1,2,3], function (obj, prop, oldVal, newVal) {
     let propFormat = isNaN(parseInt(prop)) ? `.${prop}` : `[${prop}]`,
         arraySum = myArr.reduce((a,b) => a + b);
-	console.log(`myArr${propFormat} changed from ${oldVal} to ${newVal}`);
+    console.log(`myArr${propFormat} changed from ${oldVal} to ${newVal}`);
     console.log(`  sum [${myArr}] = ${arraySum}`);
 });
 

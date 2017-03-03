@@ -33,6 +33,7 @@ const dynReflectHandler = new Proxy({}, {
     }
 });
 
+// run the measurements async
 window.setTimeout(function run() {
     measure({}, 'object');
     measure(new Proxy({}, {}), 'noop');

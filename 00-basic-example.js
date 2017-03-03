@@ -1,10 +1,10 @@
 // 00 - Basic example of using a Proxy
 
 const values = {a:1, b:2},
-	handler = {
-    	get (obj, prop) {
-        	const value = obj[prop];
-        	console.log(`GET ${prop} = ${value}`);
+    handler = {
+        get (obj, prop) {
+            const value = obj[prop];
+            console.log(`GET ${prop} = ${value}`);
             return value;
         }
     },
