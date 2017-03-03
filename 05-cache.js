@@ -34,12 +34,12 @@ function cacheObj(ttlFunc) {
 // try it out
 const cache = cacheObj(prop => 5);
 
-function log() {
+function log(sec) {
     console.log(`${sec}s: a = ${cache.a}`);
 }
 
 console.clear();
 cache.a = 123;
 for (let sec = 0; sec < 6; sec += 1) {
-	window.setTimeout(log, sec * 1000);
+	window.setTimeout(() => log(sec), sec * 1000);
 }
