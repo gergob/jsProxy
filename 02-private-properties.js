@@ -5,7 +5,7 @@ function privateProps(obj, filterFunc) {
     	get (obj, prop) {
 			return filterFunc(prop) ? undefined : Reflect.get(obj, prop);
         },
-    	set (obj, prop, valiue) {
+    	set (obj, prop, value) {
 	        if (filterFunc(prop)) {
             	throw new TypeError(`Can't set property "${prop}"`);
             }
