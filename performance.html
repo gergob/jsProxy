@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Proxy performance</title>
+        <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <h1>performance</h1>
+        <h2>Performance measurements</h2>
+        
+        <table>
+            <tr><td>Normal object</td><td id="object">...</td></tr>
+            <tr><td>No-op forwarding proxy</td><td id="noop">...</td></tr>
+            <tr><td>Handler using Reflect</td><td id="reflect">...</td></tr>
+            <tr><td>Proxy as dynamic handler</td><td id="dynamic">...</td></tr>    
+        </table>
+        
+        <script src="performance.js"></script>                
+    </body>
+</html>
