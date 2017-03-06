@@ -1,7 +1,7 @@
 // 05 - Cache with property specific TTL
 
 function cacheObj(ttlFunc) {
-	const obj = {},
+    const obj = {},
         handler = {
             get (obj, prop) {
                 const data = Reflect.get(obj, prop);
@@ -20,14 +20,14 @@ function cacheObj(ttlFunc) {
     // decrease TTL and remove prop when it reaches zero
     function invalidate() {
         for (let prop in obj) {
-        	obj[prop].ttl -= 1;
+            obj[prop].ttl -= 1;
             if (obj[prop].ttl <= 0) {
-            	delete obj[prop];
+                delete obj[prop];
             }
         }
     }
     window.setInterval(invalidate, 1000);
-	return new Proxy(obj, handler);
+    return new Proxy(obj, handler);
 }
 
 
@@ -41,5 +41,5 @@ function log(sec) {
 console.clear();
 cache.a = 123;
 for (let sec = 0; sec < 6; sec += 1) {
-	window.setTimeout(() => log(sec), sec * 1000);
+    window.setTimeout(() => log(sec), sec * 1000);
 }
