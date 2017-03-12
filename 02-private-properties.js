@@ -3,7 +3,14 @@
 function privateProps(obj, filterFunc) {
     const handler = {
         get (obj, prop) {
-            return filterFunc(prop) ? undefined : Reflect.get(obj, prop);
+            if (!filterFunc(prop)) {
+                let value = Reflect.get(obj, prop);
+                // auto-bind the methods to the original object, so they will have unrestricted access to it via 'this'.
+                if (typeof value === 'function') {
+                    value = value.bind(obj);
+                }
+                return value;
+            }
         },
         set (obj, prop, value) {
             if (filterFunc(prop)) {
@@ -19,23 +26,34 @@ function privateProps(obj, filterFunc) {
         },
         getOwnPropertyDescriptor (obj, prop) {
             return filterFunc(prop) ? undefined : Reflect.getOwnPropertyDescriptor(obj, prop);
-        }        
+        }
     };
     return new Proxy(obj, handler);
 }
 
-const myObj = privateProps({ _private: 'secret', public: 'hello' }, prop => prop.indexOf('_') === 0);
-
-
 // trying it out
-console.log(myObj);                               // chrome somehow logs the private prop, node doesn't
-console.log(JSON.stringify(myObj));               // {"public":"hello"}
-console.log(myObj._private);                      // undefined
-console.log('_private' in myObj);                 // false
-console.log(Object.keys(myObj));                  // ['public']
-for (let prop in myObj) { console.log(prop); }    // public 
+function propFilter(prop) {
+    return prop.indexOf('_') === 0;
+}
+
+const myObj = {
+        _private: 'secret',
+        public: 'hello',
+        method: function () {
+            console.log(this._private);
+        }
+    },
+    myProxy = privateProps(myObj, propFilter);
+
+console.log(myProxy);                               // chrome somehow logs the private prop, node doesn't
+console.log(JSON.stringify(myProxy));               // {"public":"hello"}
+console.log(myProxy._private);                      // undefined - not accessible from outside
+myProxy.method();                                   // secret - accessible from methods
+console.log('_private' in myProxy);                 // false
+console.log(Object.keys(myProxy));                  // ["public", "method"]
+for (let prop in myProxy) { console.log(prop); }    // public, method
 try {
-    myObj._private = 'chicken attack';            // TypeError: Can't set property "_private"         
+    myProxy._private = 'chicken attack';            // TypeError: Can't set property "_private"
 } catch(ex) {
     console.error(ex);
 }
