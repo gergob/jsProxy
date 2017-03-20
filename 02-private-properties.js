@@ -32,7 +32,7 @@ function privateProps(obj, filterFunc) {
 }
 
 // trying it out
-function propFilter(prop) {
+function filterFunc(prop) {
     return prop.indexOf('_') === 0;
 }
 
