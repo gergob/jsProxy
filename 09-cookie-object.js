@@ -4,10 +4,8 @@ function cookieObject() {
     // load current cookies
     const cookies = {}; 
     document.cookie.split(';').forEach(item => { 
-        const i = item.indexOf('='),
-              key = item.substr(0, i).trim(),
-              value = item.substr(i + 1);
-        cookies[key] = value;
+        const [key, value] = item.split('=');
+        cookies[key] = value || '';
     });
     // proxy to persist props to cookies
     const handler = {
