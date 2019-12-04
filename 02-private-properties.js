@@ -33,7 +33,7 @@ function privateProps(obj, filterFunc) {
 
 // trying it out
 function propFilter(prop) {
-    return prop.indexOf('_') === 0;
+    return prop.startsWith('_');
 }
 
 const myObj = {
