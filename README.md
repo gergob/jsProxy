@@ -1,7 +1,8 @@
 # jsProxy
+
 ES6 Features - Use cases for Proxy
 
-I strongly recommend that you follow along the [blog post](http://dealwithjs.io/es6-features-10-use-cases-for-proxy/) and look at the examples one by one. 
+The blog is no longer available, but I strongly recommend that you follow along the [archived blog post](blog/post.md) and look at the examples one by one.
 
 You should use a recent browser, preferably Chrome.
 
